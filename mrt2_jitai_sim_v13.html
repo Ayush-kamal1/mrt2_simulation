@@ -1,468 +1,811 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:sans-serif;font-size:13px;color:#1a1a1a;background:#fff;padding:12px;}
-h2{font-size:15px;font-weight:600;margin-bottom:12px;}
-.section{background:#f5f5f3;border:1px solid #ddd;border-radius:10px;padding:12px 14px;margin-bottom:10px;}
-.stitle{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#666;margin-bottom:8px;}
-.hint{font-size:11px;color:#777;margin-bottom:8px;line-height:1.5;}
-label{font-size:11px;color:#555;display:block;margin-bottom:3px;}
-input[type=date],input[type=time],input[type=number],select{font-size:13px;padding:7px 9px;border-radius:7px;border:1px solid #ccc;background:#fff;color:#111;width:100%;}
-.field{display:flex;flex-direction:column;flex:1;min-width:90px;}
-.frow{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:8px;}
-.frow .field{min-width:80px;}
-.btn{font-size:12px;padding:7px 14px;border-radius:7px;border:1px solid #1a1a1a;background:#1a1a1a;color:#fff;cursor:pointer;font-weight:500;white-space:nowrap;}
-.btn:hover{background:#333;}
-.btn-clear{background:#fff;color:#1a1a1a;border:1px solid #1a1a1a;}
-.btn-clear:hover{background:#f0f0f0;}
-.btn-run{font-size:13px;padding:8px 20px;}
-table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px;}
-th{text-align:left;font-size:11px;color:#666;font-weight:600;padding:4px 8px;border-bottom:1px solid #ddd;background:#eee;}
-td{padding:5px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-.del{font-size:13px;cursor:pointer;color:#aaa;padding:2px 6px;border-radius:4px;}
-.del:hover{background:#fee2e2;color:#991b1b;}
-.empty{font-size:11px;color:#999;padding:6px 0;}
-.info{font-size:11px;color:#666;line-height:1.8;background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:8px 10px;margin-bottom:8px;}
-.info strong{color:#111;}
-.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:#555;margin:8px 0 6px;}
-.leg{display:flex;align-items:center;gap:4px;}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.days{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
-.dc{border:1px solid #e0e0e0;border-radius:10px;background:#fff;overflow:hidden;}
-.dh{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;}
-.dh:hover{background:#f9f9f7;}
-.dn{font-size:11px;font-weight:600;color:#888;min-width:46px;}
-.dt{font-size:13px;font-weight:600;flex:1;}
-.dbadges{display:flex;gap:4px;flex-wrap:wrap;}
-.bdg{font-size:11px;padding:2px 7px;border-radius:20px;font-weight:500;}
-.b-ok{background:#d1fae5;color:#065f46;}
-.b-g1{background:#fef3c7;color:#92400e;}
-.b-g2{background:#dbeafe;color:#1e40af;}
-.b-lng{background:#fee2e2;color:#991b1b;}
-.b-mh{background:#ede9fe;color:#4c1d95;}
-.b-ob{background:#d1fae5;color:#065f46;}
-.b-re{background:#f3f4f6;color:#374151;}
-.b-nil{background:#f3f4f6;color:#6b7280;}
-.chev{font-size:10px;color:#aaa;transition:transform .15s;}
-.chev.open{transform:rotate(90deg);}
-.dd{border-top:1px solid #eee;padding:8px 12px;display:none;}
-.dd.open{display:block;}
-.ev{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #f0f0f0;}
-.ev:last-child{border-bottom:none;}
-.et{color:#888;min-width:48px;font-size:11px;padding-top:2px;}
-.ei{min-width:18px;text-align:center;}
-.ed{flex:1;line-height:1.5;font-size:12px;}
-.sub{color:#777;font-size:11px;display:block;margin-top:1px;}
-.tag-worse{color:#991b1b;font-weight:600;}
-.tag-better{color:#065f46;font-weight:600;}
-</style>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 12px;
+    }
+
+    h2 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .section {
+      background: #f5f5f3;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+
+    .stitle {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #777;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: 11px;
+      color: #555;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    input[type=date],
+    input[type=time],
+    input[type=number],
+    select {
+      font-size: 13px;
+      padding: 7px 9px;
+      border-radius: 7px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #111;
+      width: 100%;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 90px;
+    }
+
+    .frow {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .frow .field {
+      min-width: 80px;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 7px 14px;
+      border-radius: 7px;
+      border: 1px solid #1a1a1a;
+      background: #1a1a1a;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: #333;
+    }
+
+    .btn-clear {
+      background: #fff;
+      color: #1a1a1a;
+      border: 1px solid #1a1a1a;
+    }
+
+    .btn-clear:hover {
+      background: #f0f0f0;
+    }
+
+    .btn-run {
+      font-size: 13px;
+      padding: 8px 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 11px;
+      color: #666;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-bottom: 1px solid #ddd;
+      background: #eee;
+    }
+
+    td {
+      padding: 5px 8px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .del {
+      font-size: 13px;
+      cursor: pointer;
+      color: #aaa;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .del:hover {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .empty {
+      font-size: 11px;
+      color: #999;
+      padding: 6px 0;
+    }
+
+    .info {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.8;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+    }
+
+    .info strong {
+      color: #111;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: #555;
+      margin: 8px 0 6px;
+    }
+
+    .leg {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .days {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .dc {
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .dh {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dh:hover {
+      background: #f9f9f7;
+    }
+
+    .dn {
+      font-size: 11px;
+      font-weight: 600;
+      color: #888;
+      min-width: 46px;
+    }
+
+    .dt {
+      font-size: 13px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .dbadges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .bdg {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .b-ok {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .b-g1 {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .b-g2 {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .b-lng {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .b-mh {
+      background: #ede9fe;
+      color: #4c1d95;
+    }
+
+    .b-ob {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .b-re {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .b-nil {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .chev {
+      font-size: 10px;
+      color: #aaa;
+      transition: transform .15s;
+    }
+
+    .chev.open {
+      transform: rotate(90deg);
+    }
+
+    .dd {
+      border-top: 1px solid #eee;
+      padding: 8px 12px;
+      display: none;
+    }
+
+    .dd.open {
+      display: block;
+    }
+
+    .ev {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 5px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .ev:last-child {
+      border-bottom: none;
+    }
+
+    .et {
+      color: #888;
+      min-width: 48px;
+      font-size: 11px;
+      padding-top: 2px;
+    }
+
+    .ei {
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .ed {
+      flex: 1;
+      line-height: 1.5;
+      font-size: 12px;
+    }
+
+    .sub {
+      color: #777;
+      font-size: 11px;
+      display: block;
+      margin-top: 1px;
+    }
+
+    .tag-worse {
+      color: #991b1b;
+      font-weight: 600;
+    }
+
+    .tag-better {
+      color: #065f46;
+      font-weight: 600;
+    }
+  </style>
 </head>
+
 <body>
-<h2>MRT2 JITAI simulation</h2>
+  <h2>MRT2 JITAI simulation</h2>
 
-<div class="section">
-  <div class="stitle">Setup</div>
-  <div class="frow">
-    <div class="field"><label>Onboarding date</label><input type="date" id="ob-date" value="2026-04-15"></div>
-    <div class="field"><label>Onboarding time</label><input type="time" id="ob-time" value="10:00"></div>
-    <div class="field" style="max-width:120px"><label>Simulate</label>
-      <select id="sim-days">
-        <option value="7">7 days</option>
-        <option value="14" selected>14 days</option>
-        <option value="21">21 days</option>
-        <option value="28">28 days</option>
-      </select>
+  <div class="section">
+    <div class="stitle">Setup</div>
+    <div class="frow">
+      <div class="field"><label>Onboarding date</label><input type="date" id="ob-date" value="2026-04-15"></div>
+      <div class="field"><label>Onboarding time</label><input type="time" id="ob-time" value="10:00"></div>
+      <div class="field" style="max-width:120px"><label>Simulate</label>
+        <select id="sim-days">
+          <option value="7">7 days</option>
+          <option value="14" selected>14 days</option>
+          <option value="21">21 days</option>
+          <option value="28">28 days</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:flex-end;"><button class="btn btn-run" onclick="runSim()">▶ Run</button>
+      </div>
     </div>
-    <div style="display:flex;align-items:flex-end;"><button class="btn btn-run" onclick="runSim()">▶ Run</button></div>
+    <div class="info" id="infobox">—</div>
   </div>
-  <div class="info" id="infobox">—</div>
-</div>
 
-<div class="section">
-  <div class="stitle">Onboarding conversation</div>
-  <div class="hint">Onboarding conversation completion also counts as an interaction. Onboarding JITAI activates at the first engine run ≥24h after onboarding if conversation not yet completed.</div>
-  <div class="frow">
-    <div class="field"><label>Completion date</label><input type="date" id="ob-comp-d" value="2026-04-16"></div>
-    <div class="field"><label>Completion time</label><input type="time" id="ob-comp-t" value="11:00"></div>
-    <div style="display:flex;gap:6px;align-items:flex-end;">
-      <button class="btn" onclick="setObComp()">Set</button>
-      <button class="btn btn-clear" onclick="clearObComp()">Clear</button>
+  <div class="section">
+    <div class="stitle">Onboarding conversation</div>
+    <div class="hint">Counts as an interaction. Onboarding JITAI activates 24h after onboarding if not completed, runs
+      full 24h always. On expiry: re-activates only if conversation still not completed.</div>
+    <div class="frow">
+      <div class="field"><label>Completion date</label><input type="date" id="ob-comp-d" value="2026-04-16"></div>
+      <div class="field"><label>Completion time</label><input type="time" id="ob-comp-t" value="11:00"></div>
+      <div style="display:flex;gap:6px;align-items:flex-end;">
+        <button class="btn" onclick="setObComp()">Set</button>
+        <button class="btn btn-clear" onclick="clearObComp()">Clear</button>
+      </div>
     </div>
+    <div id="ob-status" class="hint" style="color:#888">Not set.</div>
   </div>
-  <div id="ob-status" class="hint" style="color:#888">Not set.</div>
-</div>
 
-<div class="section">
-  <div class="stitle">PHQ-4 score readings</div>
-  <div class="hint">Mental health JITAI activates when latest score &gt; previous. Deactivates when score improves.</div>
-  <div class="frow">
-    <div class="field"><label>Date</label><input type="date" id="phq-d" value="2026-04-18"></div>
-    <div class="field"><label>Time</label><input type="time" id="phq-t" value="09:00"></div>
-    <div class="field" style="max-width:90px"><label>Score (0–12)</label><input type="number" id="phq-s" min="0" max="12" value="7"></div>
-    <div style="display:flex;align-items:flex-end;"><button class="btn" onclick="addPhq()">+ Add score</button></div>
+  <div class="section">
+    <div class="stitle">PHQ-4 score readings</div>
+    <div class="hint">Mental health JITAI activates when latest score &gt; previous. Deactivates when score improves.
+    </div>
+    <div class="frow">
+      <div class="field"><label>Date</label><input type="date" id="phq-d" value="2026-04-18"></div>
+      <div class="field"><label>Time</label><input type="time" id="phq-t" value="09:00"></div>
+      <div class="field" style="max-width:90px"><label>Score (0–12)</label><input type="number" id="phq-s" min="0"
+          max="12" value="7"></div>
+      <div style="display:flex;align-items:flex-end;"><button class="btn" onclick="addPhq()">+ Add score</button></div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Score</th>
+          <th>vs prev</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="phq-tbody">
+        <tr>
+          <td colspan="5" class="empty">No scores added.</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <table>
-    <thead><tr><th>Date</th><th>Time</th><th>Score</th><th>vs prev</th><th></th></tr></thead>
-    <tbody id="phq-tbody"><tr><td colspan="5" class="empty">No scores added.</td></tr></tbody>
-  </table>
-</div>
 
-<div class="section">
-  <div class="stitle">User interactions</div>
-  <div class="hint">Add app engagement events. Onboarding and onboarding conversation completion are automatically counted as interactions.</div>
-  <div class="frow">
-    <div class="field"><label>Date</label><input type="date" id="eng-d" value="2026-04-15"></div>
-    <div class="field"><label>Time</label><input type="time" id="eng-t" value="18:00"></div>
-    <div style="display:flex;align-items:flex-end;"><button class="btn" onclick="addEng()">+ Add interaction</button></div>
+  <div class="section">
+    <div class="stitle">User interactions</div>
+    <div class="hint">Onboarding and onboarding conversation completion are automatically counted as interactions.</div>
+    <div class="frow">
+      <div class="field"><label>Date</label><input type="date" id="eng-d" value="2026-04-15"></div>
+      <div class="field"><label>Time</label><input type="time" id="eng-t" value="18:00"></div>
+      <div style="display:flex;align-items:flex-end;"><button class="btn" onclick="addEng()">+ Add interaction</button>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Source</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="eng-tbody"></tbody>
+    </table>
   </div>
-  <table>
-    <thead><tr><th>Date</th><th>Time</th><th>Source</th><th></th></tr></thead>
-    <tbody id="eng-tbody"></tbody>
-  </table>
-</div>
 
-<div class="legend">
-  <div class="leg"><span class="dot" style="background:#065f46"></span>Onboarding JITAI</div>
-  <div class="leg"><span class="dot" style="background:#5b21b6"></span>Mental health JITAI</div>
-  <div class="leg"><span class="dot" style="background:#991b1b"></span>Long disengaged</div>
-  <div class="leg"><span class="dot" style="background:#92400e"></span>Group 1 JITAI</div>
-  <div class="leg"><span class="dot" style="background:#1e40af"></span>Group 2 JITAI</div>
-  <div class="leg"><span class="dot" style="background:#059669"></span>Active / off</div>
-  <div class="leg"><span class="dot" style="background:#6b7280"></span>Re-randomised</div>
-</div>
+  <div class="legend">
+    <div class="leg"><span class="dot" style="background:#065f46"></span>Onboarding JITAI</div>
+    <div class="leg"><span class="dot" style="background:#5b21b6"></span>Mental health JITAI</div>
+    <div class="leg"><span class="dot" style="background:#991b1b"></span>Long disengaged (4d)</div>
+    <div class="leg"><span class="dot" style="background:#92400e"></span>Group 1 JITAI (72h)</div>
+    <div class="leg"><span class="dot" style="background:#1e40af"></span>Group 2 JITAI (72h)</div>
+    <div class="leg"><span class="dot" style="background:#059669"></span>Active / off</div>
+    <div class="leg"><span class="dot" style="background:#6b7280"></span>Re-randomised</div>
+  </div>
 
-<div class="days" id="days"></div>
+  <div class="days" id="days"></div>
 
-<script>
-var userEngs=[{date:'2026-04-15',time:'18:00',src:'user'}];
-var phqs=[];
-var obComp=null;
-var G1=['Short Disengaged JITAI','AM Checkin JITAI','Sporadic JITAI'];
-var G2=['Short Disengaged JITAI','PM Checkin JITAI','Sporadic JITAI'];
+  <script>
+    var LONG_DAYS = 4;   // long disengagement JITAI window
+    var GROUP_DAYS = 3;  // group 1/2 JITAI window (72h = 3 days)
+    var LONG_THRESH_DAYS = 7; // days of inactivity to trigger long disengaged
 
-function pad(n){return n<10?'0'+n:''+n;}
-function toMins(s){var p=s.split(':');return +p[0]*60+ +p[1];}
-function toHHMM(m){m=((m%1440)+1440)%1440;return pad(Math.floor(m/60))+':'+pad(Math.round(m%60));}
-function dtMs(d,t){return new Date(d+'T'+t+':00').getTime();}
-function msDate(ms){return new Date(ms).toISOString().slice(0,10);}
-function msTime(ms){var d=new Date(ms);return pad(d.getHours())+':'+pad(d.getMinutes());}
-function rnd(arr,excl){var p=excl?arr.filter(function(x){return x!==excl;}):arr.slice();if(!p.length)p=arr.slice();return p[Math.floor(Math.random()*p.length)];}
+    var userEngs = [{ date: '2026-04-15', time: '18:00', src: 'user' }];
+    var phqs = [];
+    var obComp = null;
+    var G1 = ['Short Disengaged JITAI', 'AM Checkin JITAI', 'Sporadic JITAI'];
+    var G2 = ['Short Disengaged JITAI', 'PM Checkin JITAI', 'Sporadic JITAI'];
 
-function setObComp(){
-  var d=document.getElementById('ob-comp-d').value,t=document.getElementById('ob-comp-t').value;
-  if(!d||!t)return;
-  obComp={date:d,time:t};
-  document.getElementById('ob-status').innerHTML='<span style="color:#065f46;font-weight:500">✓ Completed '+d+' at '+t+'</span> — <span style="cursor:pointer;color:#991b1b" onclick="clearObComp()">remove</span>';
-  runSim();
-}
-function clearObComp(){
-  obComp=null;
-  document.getElementById('ob-status').textContent='Not set.';
-  runSim();
-}
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function toMins(s) { var p = s.split(':'); return +p[0] * 60 + +p[1]; }
+    function toHHMM(m) { m = ((m % 1440) + 1440) % 1440; return pad(Math.floor(m / 60)) + ':' + pad(Math.round(m % 60)); }
+    function dtMs(d, t) { return new Date(d + 'T' + t + ':00').getTime(); }
+    function msDate(ms) { return new Date(ms).toISOString().slice(0, 10); }
+    function msTime(ms) { var d = new Date(ms); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+    function rnd(arr, excl) { var p = excl ? arr.filter(function (x) { return x !== excl; }) : arr.slice(); if (!p.length) p = arr.slice(); return p[Math.floor(Math.random() * p.length)]; }
 
-function addPhq(){
-  var d=document.getElementById('phq-d').value,t=document.getElementById('phq-t').value,s=parseInt(document.getElementById('phq-s').value);
-  if(!d||!t||isNaN(s)||s<0||s>12){alert('Enter a valid date, time and score (0–12).');return;}
-  phqs.push({date:d,time:t,score:s});
-  phqs.sort(function(a,b){return dtMs(a.date,a.time)-dtMs(b.date,b.time);});
-  renderPhqTable();runSim();
-}
-function removePhq(i){phqs.splice(i,1);renderPhqTable();runSim();}
-function renderPhqTable(){
-  var tb=document.getElementById('phq-tbody');
-  if(!phqs.length){tb.innerHTML='<tr><td colspan="5" class="empty">No scores added.</td></tr>';return;}
-  tb.innerHTML=phqs.map(function(p,i){
-    var vs='—';
-    if(i>0){var diff=p.score-phqs[i-1].score;vs=diff>0?'<span class="tag-worse">▲ +'+diff+' worse</span>':diff<0?'<span class="tag-better">▼ '+diff+' better</span>':'<span style="color:#888">= same</span>';}
-    return '<tr><td>'+p.date+'</td><td>'+p.time+'</td><td><strong>'+p.score+'</strong></td><td>'+vs+'</td><td><span class="del" onclick="removePhq('+i+')">✕</span></td></tr>';
-  }).join('');
-}
-
-function addEng(){
-  var d=document.getElementById('eng-d').value,t=document.getElementById('eng-t').value;
-  if(!d||!t){alert('Enter a valid date and time.');return;}
-  userEngs.push({date:d,time:t,src:'user'});
-  userEngs.sort(function(a,b){return dtMs(a.date,a.time)-dtMs(b.date,b.time);});
-  renderEngTable();runSim();
-}
-function removeEng(i){
-  // only remove user-added entries (offset past auto entries shown at top of table)
-  userEngs.splice(i,1);
-  renderEngTable();runSim();
-}
-function renderEngTable(){
-  var tb=document.getElementById('eng-tbody');
-  var rows='';
-  // user entries
-  if(!userEngs.length){
-    rows='<tr><td colspan="4" class="empty">No user interactions added.</td></tr>';
-  } else {
-    rows=userEngs.map(function(e,i){
-      return '<tr><td>'+e.date+'</td><td>'+e.time+'</td><td style="color:#888;font-size:11px">user</td><td><span class="del" onclick="removeEng('+i+')">✕</span></td></tr>';
-    }).join('');
-  }
-  tb.innerHTML=rows;
-}
-
-function getGrp(list){
-  if(!list.length)return null;
-  var l=list.slice(-3);
-  var avg=l.reduce(function(s,e){return s+toMins(e.time);},0)/l.length;
-  var am=avg>=240&&avg<960;
-  return{n:am?1:2,label:am?'Group 1 (AM)':'Group 2 (PM)',avg:toHHMM(avg)};
-}
-function phqAt(ms){
-  var sc=phqs.filter(function(p){return dtMs(p.date,p.time)<=ms;});
-  if(sc.length<2)return{worsened:false,note:'Fewer than 2 PHQ-4 readings so far'};
-  var prev=sc[sc.length-2].score,curr=sc[sc.length-1].score;
-  return{worsened:curr>prev,improved:curr<prev,prev:prev,curr:curr,
-    note:'PHQ-4 '+prev+' → '+curr+' ('+(curr>prev?'worsened':curr<prev?'improved':'unchanged')+')'};
-}
-
-function runSim(){
-  var obDate=document.getElementById('ob-date').value;
-  var obTime=document.getElementById('ob-time').value;
-  var simDays=parseInt(document.getElementById('sim-days').value);
-  if(!obDate||!obTime||isNaN(simDays))return;
-
-  var obMs=dtMs(obDate,obTime);
-  var e1=toHHMM(toMins(obTime));
-  var e2=toHHMM((toMins(obTime)+720)%1440);
-  var obCompMs=obComp?dtMs(obComp.date,obComp.time):null;
-  var obJitaiEligMs=obMs+86400000;
-
-  // Build the FULL interaction list:
-  // onboarding itself + onboarding conversation completion (if set) + user interactions
-  var allEngs=[];
-  allEngs.push({ms:obMs, time:obTime, src:'onboarding'});
-  if(obCompMs) allEngs.push({ms:obCompMs, time:obComp.time, src:'onboarding conversation'});
-  userEngs.forEach(function(e){ allEngs.push({ms:dtMs(e.date,e.time), time:e.time, src:'user'}); });
-  allEngs = allEngs.filter(function(e){return e.ms>=obMs;});
-  allEngs.sort(function(a,b){return a.ms-b.ms;});
-
-  document.getElementById('infobox').innerHTML=
-    '<strong>Engine runs:</strong> '+e1+' and '+e2+' daily.<br>'+
-    '<strong>Interactions include:</strong> onboarding, onboarding conversation completion, and all user app engagements.<br>'+
-    '<strong>Eligibility check at run T:</strong> Any interaction between previous run and T? No → JITAI eligible.<br>'+
-    '<strong>Onboarding JITAI:</strong> Eligible from '+msDate(obJitaiEligMs)+' '+msTime(obJitaiEligMs)+' if conversation not completed.<br>'+
-    '<strong>Priority:</strong> Onboarding → Mental health → Long disengaged (&gt;7d) → Group 1/2.';
-
-  // Build engine runs
-  var runs=[];
-  for(var d=0;d<=simDays;d++){
-    var base=new Date(obDate+'T'+e1+':00').getTime()+d*86400000;
-    if(d===0){runs.push({ms:obMs+12*3600000,lbl:'Engine run 2'});}
-    else{runs.push({ms:base,lbl:'Engine run 1'});runs.push({ms:base+12*3600000,lbl:'Engine run 2'});}
-  }
-  runs.sort(function(a,b){return a.ms-b.ms;});
-  runs=runs.filter(function(r){return r.ms>obMs&&r.ms<=obMs+simDays*86400000;});
-
-  var active=null;
-  var evts=[];
-
-  // Seed display events
-  evts.push({ms:obMs,icon:'🟢',desc:'User onboarded',
-    sub:'Counts as first interaction. Engine at '+e1+' and '+e2+' daily.',
-    bdg:{t:'Onboarded',c:'b-ob'}});
-  if(obCompMs&&obCompMs>=obMs&&obCompMs<=obMs+simDays*86400000)
-    evts.push({ms:obCompMs,icon:'🎓',desc:'Onboarding conversation completed',
-      sub:'Counts as an interaction. Onboarding JITAI will deactivate at next engine run.',bdg:null});
-  userEngs.filter(function(e){var m=dtMs(e.date,e.time);return m>obMs&&m<=obMs+simDays*86400000;})
-    .forEach(function(e){evts.push({ms:dtMs(e.date,e.time),icon:'👆',desc:'User interaction',sub:'Engagement at '+e.time,bdg:null});});
-  phqs.filter(function(p){var m=dtMs(p.date,p.time);return m>=obMs&&m<=obMs+simDays*86400000;})
-    .forEach(function(p){var m=dtMs(p.date,p.time),st=phqAt(m);evts.push({ms:m,icon:'📋',desc:'PHQ-4 recorded: '+p.score,sub:st.note,bdg:null});});
-
-  // Process engine runs
-  for(var ri=0;ri<runs.length;ri++){
-    var run=runs[ri];
-    var prevRunMs=ri>0?runs[ri-1].ms:obMs;
-
-    // All interactions up to now (for group assignment)
-    var upTo=allEngs.filter(function(e){return e.ms<=run.ms;});
-    // Last interaction ever
-    var last=upTo.length?upTo[upTo.length-1]:null;
-    var hrsSinceLast=last?(run.ms-last.ms)/3600000:Infinity;
-    var daysSinceLast=hrsSinceLast/24;
-
-    // Interactions in window (prevRun, run] — this is the eligibility window
-    var engInWindow=allEngs.filter(function(e){return e.ms>prevRunMs&&e.ms<=run.ms;});
-    var hadEngInWindow=engInWindow.length>0;
-
-    var grp=getGrp(upTo);
-    var phqSt=phqAt(run.ms);
-    var onbDone=obCompMs&&obCompMs<=run.ms;
-    var obElig=run.ms>=obJitaiEligMs;
-
-    function push(icon,desc,sub,bdg){evts.push({ms:run.ms,icon:icon,desc:desc,sub:sub,bdg:bdg});}
-
-    // ── P1: Onboarding JITAI ──
-    if(obElig&&!onbDone){
-      if(!active||active.kind!=='ob'){
-        var ov=active?' (overrides '+active.name+')':'';
-        push('📚','Onboarding JITAI activated'+ov,
-          'No onboarding conversation completed 24h+ after onboarding.',
-          {t:'Onboarding JITAI',c:'b-ob'});
-        active={name:'Onboarding JITAI',kind:'ob',groupN:null,activatedMs:run.ms,expiresMs:null};
-      } else {
-        push('📚','Onboarding JITAI — active','Awaiting onboarding conversation completion.',{t:'Onboarding active',c:'b-ob'});
-      }
-      continue;
+    function setObComp() {
+      var d = document.getElementById('ob-comp-d').value, t = document.getElementById('ob-comp-t').value;
+      if (!d || !t) return;
+      obComp = { date: d, time: t };
+      document.getElementById('ob-status').innerHTML = '<span style="color:#065f46;font-weight:500">✓ Completed ' + d + ' at ' + t + '</span> — <span style="cursor:pointer;color:#991b1b" onclick="clearObComp()">remove</span>';
+      runSim();
     }
-    if(onbDone&&active&&active.kind==='ob'){
-      push('✅','Onboarding JITAI deactivated',
-        'Conversation completed '+obComp.date+' '+obComp.time+' (counts as interaction). Re-evaluating.',
-        {t:'Onboarding done',c:'b-ok'});
-      active=null;
+    function clearObComp() { obComp = null; document.getElementById('ob-status').textContent = 'Not set.'; runSim(); }
+
+    function addPhq() {
+      var d = document.getElementById('phq-d').value, t = document.getElementById('phq-t').value, s = parseInt(document.getElementById('phq-s').value);
+      if (!d || !t || isNaN(s) || s < 0 || s > 12) { alert('Enter a valid date, time and score (0–12).'); return; }
+      phqs.push({ date: d, time: t, score: s });
+      phqs.sort(function (a, b) { return dtMs(a.date, a.time) - dtMs(b.date, b.time); });
+      renderPhqTable(); runSim();
+    }
+    function removePhq(i) { phqs.splice(i, 1); renderPhqTable(); runSim(); }
+    function renderPhqTable() {
+      var tb = document.getElementById('phq-tbody');
+      if (!phqs.length) { tb.innerHTML = '<tr><td colspan="5" class="empty">No scores added.</td></tr>'; return; }
+      tb.innerHTML = phqs.map(function (p, i) {
+        var vs = '—';
+        if (i > 0) { var diff = p.score - phqs[i - 1].score; vs = diff > 0 ? '<span class="tag-worse">▲ +' + diff + ' worse</span>' : diff < 0 ? '<span class="tag-better">▼ ' + diff + ' better</span>' : '<span style="color:#888">= same</span>'; }
+        return '<tr><td>' + p.date + '</td><td>' + p.time + '</td><td><strong>' + p.score + '</strong></td><td>' + vs + '</td><td><span class="del" onclick="removePhq(' + i + ')">✕</span></td></tr>';
+      }).join('');
     }
 
-    // ── P2: Mental health JITAI ──
-    if(phqSt.worsened){
-      if(!active||active.kind==='group'||active.kind==='long'){
-        var ov2=active?' (overrides '+active.name+')':'';
-        push('🧠','Mental health JITAI activated'+ov2,phqSt.note+'. Active until PHQ-4 improves.',{t:'Mental health JITAI',c:'b-mh'});
-        active={name:'Mental health JITAI',kind:'mh',groupN:null,activatedMs:run.ms,expiresMs:null};
-      } else if(active.kind==='mh'){
-        push('🧠','Mental health JITAI — active',phqSt.note,{t:'MH active',c:'b-mh'});
-      }
-      continue;
+    function addEng() {
+      var d = document.getElementById('eng-d').value, t = document.getElementById('eng-t').value;
+      if (!d || !t) { alert('Enter a valid date and time.'); return; }
+      userEngs.push({ date: d, time: t, src: 'user' });
+      userEngs.sort(function (a, b) { return dtMs(a.date, a.time) - dtMs(b.date, b.time); });
+      renderEngTable(); runSim();
     }
-    if(!phqSt.worsened&&active&&active.kind==='mh'){
-      push('✅','Mental health JITAI deactivated',phqSt.note+'. Re-evaluating.',{t:'MH JITAI off',c:'b-ok'});
-      active=null;
-    }
-
-    // ── Interaction in window → no JITAI / deactivate ──
-    if(hadEngInWindow){
-      var srcList=engInWindow.map(function(e){return e.src;}).join(', ');
-      if(active&&(active.kind==='long'||active.kind==='group')){
-        push('✅',active.name+' deactivated',
-          'Interaction(s) in window ['+msTime(prevRunMs)+'→'+msTime(run.ms)+']: '+srcList+'. Normal journey resumes.',
-          {t:'JITAI off',c:'b-ok'});
-        active=null;
-      } else {
-        var cl=grp?(grp.n===1?'AM checkin eligible':'PM checkin eligible'):'Active user';
-        push('🔵',cl,
-          'Interaction(s) in window ['+msTime(prevRunMs)+'→'+msTime(run.ms)+']: '+srcList+'. No JITAI needed.'+(grp?' '+grp.label+', avg '+grp.avg+'.':''),
-          null);
-      }
-      continue;
+    function removeEng(i) { userEngs.splice(i, 1); renderEngTable(); runSim(); }
+    function renderEngTable() {
+      var tb = document.getElementById('eng-tbody');
+      if (!userEngs.length) { tb.innerHTML = '<tr><td colspan="4" class="empty">No interactions added.</td></tr>'; return; }
+      tb.innerHTML = userEngs.map(function (e, i) {
+        return '<tr><td>' + e.date + '</td><td>' + e.time + '</td><td style="color:#888;font-size:11px">user</td><td><span class="del" onclick="removeEng(' + i + ')">✕</span></td></tr>';
+      }).join('');
     }
 
-    // No interaction in window
+    function getGrp(list) {
+      if (!list.length) return null;
+      var l = list.slice(-3);
+      var avg = l.reduce(function (s, e) { return s + toMins(e.time); }, 0) / l.length;
+      var am = avg >= 240 && avg < 960;
+      return { n: am ? 1 : 2, label: am ? 'Group 1 (AM)' : 'Group 2 (PM)', avg: toHHMM(avg) };
+    }
+    function phqAt(ms) {
+      var sc = phqs.filter(function (p) { return dtMs(p.date, p.time) <= ms; });
+      if (sc.length < 2) return { worsened: false, improved: false, sameOrWorse: false, note: 'Fewer than 2 PHQ-4 readings so far' };
+      var prev = sc[sc.length - 2].score, curr = sc[sc.length - 1].score;
+      return {
+        worsened: curr > prev, improved: curr < prev, sameOrWorse: curr >= prev, prev: prev, curr: curr,
+        note: 'PHQ-4 ' + prev + ' → ' + curr + ' (' + (curr > prev ? 'worsened' : curr < prev ? 'improved' : 'unchanged') + ')'
+      };
+    }
 
-    // ── P3: Long disengaged (>7 days since any interaction) ──
-    if(daysSinceLast>7){
-      if(active&&active.kind==='group'){
-        push('🔴','Long disengagement JITAI overrides '+active.name,
-          Math.round(hrsSinceLast)+'h ('+Math.round(daysSinceLast)+' days) since last interaction.',
-          {t:'Long disengage',c:'b-lng'});
-        active={name:'Long disengagement JITAI',kind:'long',groupN:null,activatedMs:run.ms,expiresMs:run.ms+7*86400000};
-        continue;
+    function runSim() {
+      var obDate = document.getElementById('ob-date').value;
+      var obTime = document.getElementById('ob-time').value;
+      var simDays = parseInt(document.getElementById('sim-days').value);
+      if (!obDate || !obTime || isNaN(simDays)) return;
+
+      var obMs = dtMs(obDate, obTime);
+      var e1 = toHHMM(toMins(obTime));
+      var e2 = toHHMM((toMins(obTime) + 720) % 1440);
+      var obCompMs = obComp ? dtMs(obComp.date, obComp.time) : null;
+      var obJitaiEligMs = obMs + 86400000;
+
+      document.getElementById('infobox').innerHTML =
+        '<strong>Engine runs:</strong> ' + e1 + ' and ' + e2 + ' daily.<br>' +
+        '<strong>JITAI windows:</strong> Onboarding = 24h · Group 1/2 = 72h, runs regardless of interactions (re-activates if no interaction in last 24h at expiry) · Long disengaged = ' + LONG_DAYS + ' days (triggers after ' + LONG_THRESH_DAYS + ' days inactivity).<br>' +
+        '<strong>Onboarding JITAI eligible from:</strong> ' + msDate(obJitaiEligMs) + ' ' + msTime(obJitaiEligMs) + '. Runs full 24h, re-activates if conversation still incomplete.<br>' +
+        '<strong>Priority:</strong> Onboarding → Mental health → Long disengaged → Group 1/2.';
+
+      // Full interaction list
+      var allEngs = [];
+      allEngs.push({ ms: obMs, time: obTime, src: 'onboarding' });
+      if (obCompMs) allEngs.push({ ms: obCompMs, time: obComp.time, src: 'onboarding conversation' });
+      userEngs.forEach(function (e) { allEngs.push({ ms: dtMs(e.date, e.time), time: e.time, src: 'user' }); });
+      // PHQ-4 readings also count as interactions
+      phqs.forEach(function (p) { allEngs.push({ ms: dtMs(p.date, p.time), time: p.time, src: 'PHQ-4' }); });
+      allEngs = allEngs.filter(function (e) { return e.ms >= obMs; });
+      allEngs.sort(function (a, b) { return a.ms - b.ms; });
+
+      // Engine runs
+      var runs = [];
+      for (var d = 0; d <= simDays; d++) {
+        var base = new Date(obDate + 'T' + e1 + ':00').getTime() + d * 86400000;
+        if (d === 0) { runs.push({ ms: obMs + 12 * 3600000, lbl: 'Engine run 2' }); }
+        else { runs.push({ ms: base, lbl: 'Engine run 1' }); runs.push({ ms: base + 12 * 3600000, lbl: 'Engine run 2' }); }
       }
-      if(!active){
-        push('🔴','Long disengagement JITAI activated',
-          Math.round(hrsSinceLast)+'h ('+Math.round(daysSinceLast)+' days) since last interaction. 7-day window, expires '+msDate(run.ms+7*86400000)+' '+msTime(run.ms+7*86400000)+'.',
-          {t:'Long disengage',c:'b-lng'});
-        active={name:'Long disengagement JITAI',kind:'long',groupN:null,activatedMs:run.ms,expiresMs:run.ms+7*86400000};
-        continue;
-      }
-      if(active.kind==='long'){
-        if(run.ms<active.expiresMs){
-          var dl=Math.ceil((active.expiresMs-run.ms)/86400000);
-          push('🔴','Long disengagement JITAI — active',
-            Math.round(hrsSinceLast)+'h inactive. '+dl+' day(s) left (expires '+msDate(active.expiresMs)+' '+msTime(active.expiresMs)+').',
-            {t:'Long disengage active',c:'b-lng'});
+      runs.sort(function (a, b) { return a.ms - b.ms; });
+      runs = runs.filter(function (r) { return r.ms > obMs && r.ms <= obMs + simDays * 86400000; });
+
+      var active = null;
+      var evts = [];
+
+      evts.push({
+        ms: obMs, icon: '🟢', desc: 'User onboarded',
+        sub: 'Counts as first interaction. Engine at ' + e1 + ' and ' + e2 + '. Onboarding JITAI eligible from ' + msDate(obJitaiEligMs) + ' ' + msTime(obJitaiEligMs) + '.',
+        bdg: { t: 'Onboarded', c: 'b-ob' }
+      });
+      if (obCompMs && obCompMs >= obMs && obCompMs <= obMs + simDays * 86400000)
+        evts.push({
+          ms: obCompMs, icon: '🎓', desc: 'Onboarding conversation completed',
+          sub: 'Counts as an interaction. Prevents Onboarding JITAI from re-activating after its 24h window.', bdg: null
+        });
+      userEngs.filter(function (e) { var m = dtMs(e.date, e.time); return m > obMs && m <= obMs + simDays * 86400000; })
+        .forEach(function (e) { evts.push({ ms: dtMs(e.date, e.time), icon: '👆', desc: 'User interaction', sub: 'Engagement at ' + e.time, bdg: null }); });
+      phqs.filter(function (p) { var m = dtMs(p.date, p.time); return m >= obMs && m <= obMs + simDays * 86400000; })
+        .forEach(function (p) { var m = dtMs(p.date, p.time), st = phqAt(m); evts.push({ ms: m, icon: '📋', desc: 'PHQ-4 recorded: ' + p.score, sub: st.note, bdg: null }); });
+
+      for (var ri = 0; ri < runs.length; ri++) {
+        var run = runs[ri];
+        var prevRunMs = ri > 0 ? runs[ri - 1].ms : obMs;
+        var upTo = allEngs.filter(function (e) { return e.ms <= run.ms; });
+        var last = upTo.length ? upTo[upTo.length - 1] : null;
+        var hrsSinceLast = last ? (run.ms - last.ms) / 3600000 : Infinity;
+        var daysSinceLast = hrsSinceLast / 24;
+        var engInWindow = allEngs.filter(function (e) { return e.ms > prevRunMs && e.ms <= run.ms; });
+        var hadEngInWindow = engInWindow.length > 0;
+        var grp = getGrp(upTo);
+        var phqSt = phqAt(run.ms);
+        var onbDone = obCompMs && obCompMs <= run.ms;
+        var obElig = run.ms >= obJitaiEligMs;
+
+        function push(icon, desc, sub, bdg) { evts.push({ ms: run.ms, icon: icon, desc: desc, sub: sub, bdg: bdg }); }
+
+        // ── P1: Onboarding JITAI ──
+        if (active && active.kind === 'ob') {
+          if (run.ms < active.expiresMs) {
+            var hoursLeft = Math.ceil((active.expiresMs - run.ms) / 3600000);
+            var compNote = onbDone ? ' (conversation completed — will not re-activate on expiry)' : '';
+            push('📚', 'Onboarding JITAI — active',
+              hoursLeft + 'h remaining in 24h window (expires ' + msDate(active.expiresMs) + ' ' + msTime(active.expiresMs) + ').' + compNote,
+              { t: 'Onboarding active', c: 'b-ob' });
+            continue;
+          } else {
+            if (onbDone) {
+              push('✅', 'Onboarding JITAI expired — conversation completed',
+                '24h window ended. Conversation was completed at ' + obComp.date + ' ' + obComp.time + '. Will not re-activate.',
+                { t: 'Onboarding done', c: 'b-ok' });
+              active = null;
+            } else {
+              var newExpMs = run.ms + 86400000;
+              push('📚', 'Onboarding JITAI re-activated (conversation still incomplete)',
+                '24h window ended, conversation still not done. Re-activating for another 24h, expires ' + msDate(newExpMs) + ' ' + msTime(newExpMs) + '.',
+                { t: 'Onboarding JITAI', c: 'b-ob' });
+              active = { name: 'Onboarding JITAI', kind: 'ob', groupN: null, activatedMs: run.ms, expiresMs: newExpMs };
+              continue;
+            }
+          }
+        }
+
+        if (obElig && !onbDone && (!active || (active.kind !== 'ob' && active.kind !== 'long'))) {
+          var ov = active ? ' (overrides ' + active.name + ')' : '';
+          var expMs = run.ms + 86400000;
+          push('📚', 'Onboarding JITAI activated' + ov,
+            'Conversation not completed 24h after onboarding. Runs full 24h. Expires ' + msDate(expMs) + ' ' + msTime(expMs) + '.',
+            { t: 'Onboarding JITAI', c: 'b-ob' });
+          active = { name: 'Onboarding JITAI', kind: 'ob', groupN: null, activatedMs: run.ms, expiresMs: expMs };
           continue;
-        } else {
-          push('🔄','Long disengagement JITAI expired — re-randomising',
-            '7-day window ended. Still inactive. Re-assigning to '+(grp?grp.label:'group pending')+'.',
-            {t:'Re-randomised',c:'b-re'});
-          active=null;
+        }
+
+        // ── P2: Mental health JITAI ──
+        // Activates when PHQ-4 score increases (worsens)
+        // Stays active if score remains same or increases further
+        // Deactivates ONLY when score decreases (improves)
+        if (phqSt.worsened) {
+          if (!active || active.kind === 'group') {
+            var ov2 = active ? ' (overrides ' + active.name + ')' : '';
+            push('🧠', 'Mental health JITAI activated' + ov2, phqSt.note + '. Active until PHQ-4 score decreases.', { t: 'Mental health JITAI', c: 'b-mh' });
+            active = { name: 'Mental health JITAI', kind: 'mh', groupN: null, activatedMs: run.ms, expiresMs: null };
+          } else if (active && active.kind === 'mh') {
+            push('🧠', 'Mental health JITAI — active (score still elevated)', phqSt.note, { t: 'MH active', c: 'b-mh' });
+          }
+          continue;
+        }
+        if (active && active.kind === 'mh') {
+          if (phqSt.improved) {
+            // Score decreased — deactivate
+            push('✅', 'Mental health JITAI deactivated', phqSt.note + '. Score decreased — re-evaluating.', { t: 'MH JITAI off', c: 'b-ok' });
+            active = null;
+          } else {
+            // Score same or no new reading — stay active
+            push('🧠', 'Mental health JITAI — active (score unchanged)', phqSt.note + '. Remains active until score decreases.', { t: 'MH active', c: 'b-mh' });
+            continue;
+          }
+        }
+
+        // ── P3: Long Disengagement — checked FIRST, overrides Group JITAI ──
+        // Always clean up expired Long JITAI, regardless of daysSinceLast
+        if (active && active.kind === 'long' && run.ms >= active.expiresMs) {
+          push('✅', 'Long disengagement JITAI — 4-day window completed',
+            LONG_DAYS + '-day window ended. Normal journey resumes.',
+            { t: 'Long JITAI ended', c: 'b-ok' });
+          active = null;
+          // fall through to Group / P4 logic below
+        }
+
+        // If Long not yet active but eligible — activate (overrides Group JITAI)
+        // If user is still inactive after a previous Long JITAI expires, they securely stay in Long Disengagement.
+        if (daysSinceLast >= LONG_THRESH_DAYS && (!active || active.kind === 'group')) {
+          var ovNote = (active && active.kind === 'group') ? ' (overrides ' + active.name + ')' : '';
+          push('🔴', 'Long disengagement JITAI activated' + ovNote,
+            Math.round(daysSinceLast) + ' days since last interaction/contact. Active for ' + LONG_DAYS + ' days, expires ' + msDate(run.ms + LONG_DAYS * 86400000) + ' ' + msTime(run.ms + LONG_DAYS * 86400000) + '.',
+            { t: 'Long disengage', c: 'b-lng' });
+          active = { name: 'Long disengagement JITAI', kind: 'long', groupN: null, activatedMs: run.ms, expiresMs: run.ms + LONG_DAYS * 86400000 };
+          continue;
+        }
+
+        // If Long is active and within its 4-day window — runs regardless of interactions
+        if (active && active.kind === 'long' && run.ms < active.expiresMs) {
+          var dlk = Math.ceil((active.expiresMs - run.ms) / 86400000);
+          var intNote = hadEngInWindow
+            ? ' Interaction(s) noted: ' + engInWindow.map(function (e) { return e.src; }).join(', ') + '. JITAI continues for full ' + LONG_DAYS + '-day window.'
+            : '';
+          push('🔴', 'Long disengagement JITAI — active' + (hadEngInWindow ? ' (interaction noted)' : ''),
+            dlk + ' day(s) left (expires ' + msDate(active.expiresMs) + ' ' + msTime(active.expiresMs) + '). Runs full ' + LONG_DAYS + '-day window regardless of interactions.' + intNote,
+            { t: 'Long disengage active', c: 'b-lng' });
+          continue;
+        }
+
+        // ── P4: Active Group JITAI — runs full 72h window regardless of interactions ──
+        if (active && active.kind === 'group') {
+          if (run.ms < active.expiresMs) {
+            var hoursLeftG = Math.ceil((active.expiresMs - run.ms) / 3600000);
+            var interNoteG = hadEngInWindow ? ' Interaction(s) noted: ' + engInWindow.map(function (e) { return e.src; }).join(', ') + '. JITAI continues for full 72h.' : '';
+            push(active.groupN === 1 ? '🟡' : '🟠',
+              active.name + ' — active' + (hadEngInWindow ? ' (interaction noted)' : ''),
+              hoursLeftG + 'h remaining in 72h window (expires ' + msDate(active.expiresMs) + ' ' + msTime(active.expiresMs) + ').' + interNoteG,
+              { t: active.groupN === 1 ? 'Group 1 active' : 'Group 2 active', c: active.groupN === 1 ? 'b-g1' : 'b-g2' });
+            continue;
+          } else {
+            // 72h window expired — check interaction in last engine window to decide re-activation
+            var prev2 = active.name, pgn = active.groupN;
+            if (hadEngInWindow) {
+              var srcListG = engInWindow.map(function (e) { return e.src; }).join(', ');
+              push('✅', prev2 + ' expired — interaction in window',
+                '72h window ended. Interaction(s) in last 24h: ' + srcListG + '. JITAI will not re-activate. Normal journey resumes.',
+                { t: 'JITAI off', c: 'b-ok' });
+              active = null;
+              // fall through to check P5
+            } else {
+              // No interaction → re-randomise within same group for another 72h
+              var pool2 = pgn === 1 ? G1 : G2;
+              var picked2 = rnd(pool2, prev2);
+              push('🔄',
+                prev2 + ' expired — re-randomising within ' + (pgn === 1 ? 'Group 1' : 'Group 2'),
+                '72h window ended, no interaction in last 24h. New: ' + picked2 + '. Active another 72h, expires ' + msDate(run.ms + GROUP_DAYS * 86400000) + ' ' + msTime(run.ms + GROUP_DAYS * 86400000) + '.',
+                { t: '→ ' + picked2.split(' ')[0], c: 'b-re' });
+              active = { name: picked2, kind: 'group', groupN: pgn, activatedMs: run.ms, expiresMs: run.ms + GROUP_DAYS * 86400000 };
+              continue;
+            }
+          }
+        }
+
+        // ── Interaction in window (no active JITAI) ──
+        if (hadEngInWindow) {
+          var srcList = engInWindow.map(function (e) { return e.src; }).join(', ');
+          var cl = grp ? (grp.n === 1 ? 'AM checkin eligible' : 'PM checkin eligible') : 'Active user';
+          push('🔵', cl,
+            'Interaction(s) in window [' + msTime(prevRunMs) + '→' + msTime(run.ms) + ']: ' + srcList + '.' + (grp ? ' ' + grp.label + ', avg ' + grp.avg + '.' : ''),
+            null);
+          continue;
+        }
+
+        // ── P5: Activate new Group 1 / Group 2 JITAI ──
+        if (!hadEngInWindow && daysSinceLast > 1 && !active) {
+          var pool = grp ? (grp.n === 1 ? G1 : G2) : G1;
+          var gn = grp ? grp.n : 1;
+          var picked = rnd(pool, null);
+          push(gn === 1 ? '🟡' : '🟠',
+            picked + ' activated (' + (grp ? grp.label : 'Group 1 default') + ')',
+            'No interaction in window [' + msTime(prevRunMs) + '→' + msTime(run.ms) + ']. ' + Math.round(hrsSinceLast) + 'h since last. Active 72h, expires ' + msDate(run.ms + GROUP_DAYS * 86400000) + ' ' + msTime(run.ms + GROUP_DAYS * 86400000) + '.' + (grp ? ' Avg eng ' + grp.avg + '.' : ''),
+            { t: gn === 1 ? 'Group 1 JITAI' : 'Group 2 JITAI', c: gn === 1 ? 'b-g1' : 'b-g2' });
+          active = { name: picked, kind: 'group', groupN: gn, activatedMs: run.ms, expiresMs: run.ms + GROUP_DAYS * 86400000 };
+          continue;
+        }
+
+        if (!hadEngInWindow && daysSinceLast <= 1) {
+          push('🔵', 'No interaction in window — within 24h of last interaction',
+            'Window [' + msTime(prevRunMs) + '→' + msTime(run.ms) + ']: no interaction. Last was ' + Math.round(hrsSinceLast) + 'h ago. No JITAI triggered.', null);
         }
       }
-    }
 
-    // ── P4: Group 1 / Group 2 JITAI (no interaction in window, >24h since last) ──
-    if(!hadEngInWindow&&daysSinceLast>1){
-      if(!active){
-        var pool=grp?(grp.n===1?G1:G2):G1;
-        var gn=grp?grp.n:1;
-        var picked=rnd(pool,null);
-        push(gn===1?'🟡':'🟠',
-          picked+' activated ('+(grp?grp.label:'Group 1 default')+')',
-          'No interaction in window ['+msTime(prevRunMs)+'→'+msTime(run.ms)+']. '+Math.round(hrsSinceLast)+'h since last. Randomly selected. Active 3 days, expires '+msDate(run.ms+3*86400000)+' '+msTime(run.ms+3*86400000)+'.'+(grp?' Avg eng '+grp.avg+'.':''),
-          {t:gn===1?'Group 1 JITAI':'Group 2 JITAI',c:gn===1?'b-g1':'b-g2'});
-        active={name:picked,kind:'group',groupN:gn,activatedMs:run.ms,expiresMs:run.ms+3*86400000};
-        continue;
+      evts.sort(function (a, b) { return a.ms - b.ms; });
+      var dm = {};
+      evts.forEach(function (e) { var d = msDate(e.ms); if (!dm[d]) dm[d] = []; dm[d].push(e); });
+      var dArr = [];
+      for (var i = 0; i < simDays; i++) {
+        var ds = msDate(obMs + i * 86400000);
+        dArr.push({ d: i + 1, date: ds, evts: dm[ds] || [] });
       }
-      if(active.kind==='group'){
-        if(run.ms<active.expiresMs){
-          var dl2=Math.ceil((active.expiresMs-run.ms)/86400000);
-          push(active.groupN===1?'🟡':'🟠',
-            active.name+' — active',
-            'No interaction in window. '+dl2+' day(s) left (expires '+msDate(active.expiresMs)+' '+msTime(active.expiresMs)+').',
-            {t:active.groupN===1?'Group 1 active':'Group 2 active',c:active.groupN===1?'b-g1':'b-g2'});
-        } else {
-          var prev2=active.name,pgn=active.groupN;
-          var pool2=pgn===1?G1:G2;
-          var picked2=rnd(pool2,prev2);
-          push('🔄',
-            prev2+' expired — re-randomising within '+(pgn===1?'Group 1':'Group 2'),
-            '3-day window ended with no interaction. New: '+picked2+'. Expires '+msDate(run.ms+3*86400000)+' '+msTime(run.ms+3*86400000)+'.',
-            {t:'→ '+picked2.split(' ')[0],c:'b-re'});
-          active={name:picked2,kind:'group',groupN:pgn,activatedMs:run.ms,expiresMs:run.ms+3*86400000};
-        }
-        continue;
-      }
+      var el = document.getElementById('days');
+      el.innerHTML = dArr.map(function (day, i) {
+        var seen = {};
+        var bh = day.evts.map(function (e) { return e.bdg; }).filter(function (b) {
+          if (!b || seen[b.t]) return false; seen[b.t] = 1; return true;
+        }).map(function (b) { return '<span class="bdg ' + b.c + '">' + b.t + '</span>'; }).join('');
+        var eh = day.evts.map(function (ev) {
+          return '<div class="ev"><span class="et">' + msTime(ev.ms) + '</span><span class="ei">' + ev.icon + '</span>' +
+            '<span class="ed">' + ev.desc + (ev.sub ? '<span class="sub">' + ev.sub + '</span>' : '') + '</span></div>';
+        }).join('');
+        return '<div class="dc"><div class="dh" onclick="tog(' + i + ')">' +
+          '<span class="dn">Day ' + day.d + '</span><span class="dt">' + day.date + '</span>' +
+          '<span class="dbadges">' + (bh || '<span class="bdg b-nil">No events</span>') + '</span>' +
+          '<span class="chev" id="cv-' + i + '">▶</span></div>' +
+          '<div class="dd" id="dd-' + i + '">' + (eh || '<span style="color:#888;font-size:11px">No events.</span>') + '</div></div>';
+      }).join('');
+      var dd0 = document.getElementById('dd-0'), cv0 = document.getElementById('cv-0');
+      if (dd0) { dd0.classList.add('open'); cv0.classList.add('open'); }
     }
 
-    // Within 24h of last interaction, no window interaction — just note
-    if(!hadEngInWindow&&daysSinceLast<=1){
-      push('🔵','No interaction in window — within 24h of last interaction',
-        'Window ['+msTime(prevRunMs)+'→'+msTime(run.ms)+']: no interaction. Last interaction was '+Math.round(hrsSinceLast)+'h ago (within 24h, no JITAI triggered).',null);
+    function tog(i) {
+      var dd = document.getElementById('dd-' + i), cv = document.getElementById('cv-' + i);
+      if (!dd) return; var o = dd.classList.toggle('open'); cv.classList.toggle('open', o);
     }
-  }
 
-  // Render
-  evts.sort(function(a,b){return a.ms-b.ms;});
-  var dm={};
-  evts.forEach(function(e){var d=msDate(e.ms);if(!dm[d])dm[d]=[];dm[d].push(e);});
-  var dArr=[];
-  for(var i=0;i<simDays;i++){
-    var ds=msDate(obMs+i*86400000);
-    dArr.push({d:i+1,date:ds,evts:dm[ds]||[]});
-  }
-  var el=document.getElementById('days');
-  el.innerHTML=dArr.map(function(day,i){
-    var seen={};
-    var bh=day.evts.map(function(e){return e.bdg;}).filter(function(b){
-      if(!b||seen[b.t])return false;seen[b.t]=1;return true;
-    }).map(function(b){return '<span class="bdg '+b.c+'">'+b.t+'</span>';}).join('');
-    var eh=day.evts.map(function(ev){
-      return '<div class="ev"><span class="et">'+msTime(ev.ms)+'</span><span class="ei">'+ev.icon+'</span>'+
-        '<span class="ed">'+ev.desc+(ev.sub?'<span class="sub">'+ev.sub+'</span>':'')+'</span></div>';
-    }).join('');
-    return '<div class="dc"><div class="dh" onclick="tog('+i+')">'+
-      '<span class="dn">Day '+day.d+'</span><span class="dt">'+day.date+'</span>'+
-      '<span class="dbadges">'+(bh||'<span class="bdg b-nil">No events</span>')+'</span>'+
-      '<span class="chev" id="cv-'+i+'">▶</span></div>'+
-      '<div class="dd" id="dd-'+i+'">'+(eh||'<span style="color:#888;font-size:11px">No events.</span>')+'</div></div>';
-  }).join('');
-  var dd0=document.getElementById('dd-0'),cv0=document.getElementById('cv-0');
-  if(dd0){dd0.classList.add('open');cv0.classList.add('open');}
-}
-
-function tog(i){
-  var dd=document.getElementById('dd-'+i),cv=document.getElementById('cv-'+i);
-  if(!dd)return;var o=dd.classList.toggle('open');cv.classList.toggle('open',o);
-}
-
-renderEngTable();renderPhqTable();runSim();
-</script>
+    renderEngTable(); renderPhqTable(); runSim();
+  </script>
 </body>
+
 </html>
